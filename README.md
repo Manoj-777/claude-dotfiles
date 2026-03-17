@@ -1,8 +1,8 @@
 # Claude Dotfiles
 
-Production-ready Claude Code configuration — 94 skills, 18 agents, 40+ commands, hooks, rules, and MCP configs built and refined through intensive daily use.
+Production-ready Claude Code configuration — 95 skills, 18 agents, 40+ commands, hooks, rules, and MCP configs built and refined through intensive daily use.
 
-All 94 skills fully comply with Anthropic's official skill guide best practices.
+All skills fully comply with Anthropic's official skill guide best practices.
 
 ---
 
@@ -10,12 +10,13 @@ All 94 skills fully comply with Anthropic's official skill guide best practices.
 
 | Folder / File | Contents |
 |---------------|----------|
-| `skills/` | 94 skills — Python, Go, Kotlin, Swift, Java, Django, Docker, Postgres, security, TDD, AI/LLM, and more |
+| `skills/` | 95 skills — Python, Go, Kotlin, Swift, Java, Django, Docker, Postgres, security, TDD, AI/LLM, and more |
 | `agents/` | 18 specialized subagents — planner, code-reviewer, tdd-guide, security-reviewer, architect, and more |
 | `rules/` | Always-on coding standards — security, git workflow, testing requirements, coding style |
 | `commands/` | 40+ slash commands — `/tdd`, `/plan`, `/new-project`, `/e2e`, `/code-review`, and more |
 | `hooks/` | 5 trigger-based automations — auto-format, git safety, project detection, dotfiles sync, ECC update check |
 | `mcp-configs/` | 25+ MCP server templates + token reference guide |
+| `memory/` | Living user profile (`PROFILE.md`) — auto-loaded at session start, updated across sessions |
 | `CLAUDE.md` | Global instructions for Claude — workflow, lesson capture rules, coding standards |
 | `SETUP_GUIDE.md` | Full setup guide with MCP keys, install steps, and verification commands |
 
@@ -287,6 +288,18 @@ Lessons are captured automatically and loaded on every session start:
 - **Loaded on**: every `SessionStart` via the `session-start-lessons.js` hook
 - **Promoted globally**: use `/promote` to push project lessons to `~/.claude/CLAUDE.md`
 - **End-of-session**: run `/learn` to extract additional patterns from the full session
+
+---
+
+## Living User Profile
+
+Claude maintains a living profile of you across sessions:
+
+- **Stored at**: `~/.claude/memory/PROFILE.md`
+- **Auto-loaded**: every session start via a `SessionStart` hook in `settings.json`
+- **Updated by**: the `user-profile` skill — triggered when new preferences, corrections, or patterns are observed
+- **Covers**: identity, tech stack, work methodology, communication preferences, recurring patterns, current setup, learning history
+- **Private**: `memory/` is gitignored from the public repo — only backed up in your private dotfiles
 
 ---
 
