@@ -4,7 +4,10 @@
       "Bash(node -e \":*)",
       "Bash(node tests/run-all.js)",
       "Bash(python3 -c \":*)",
-      "Bash(node tests/scripts/install-plan.test.js)"
+      "Bash(ls \"C:\\\\Users\\\\RSManoj\\\\Downloads\\\\everything-claude-code\\\\tests\\\\fixtures\"\" 2>/dev/null && echo \"exists\" || echo \"not found \")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const p=''C:/Users/RSManoj/Downloads/everything-claude-code/tests/fixtures/tmp-install-plan-config''; console.log\\(fs.existsSync\\(p\\)\\)\")",
+      "Bash(node tests/scripts/install-plan.test.js)",
+      "Bash(node -e \"const fs=require\\(''fs''\\),p=require\\(''path''\\); const d=p.join\\(''C:/Users/RSManoj/Downloads/everything-claude-code/tests/fixtures''\\); console.log\\(''exists:'', fs.existsSync\\(d\\)\\); if\\(fs.existsSync\\(d\\)\\) { const s=fs.statSync\\(d\\); console.log\\(''mode:'', s.mode.toString\\(8\\)\\); }\")"
     ]
   },
   "model": "sonnet",
