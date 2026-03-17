@@ -32,7 +32,9 @@
 - User expresses a preference for how Claude should behave → update Communication Preferences or Expectations
 - A new tool, language, or workflow is mentioned → update Technical Stack or Environment & Setup
 - A recurring pattern is confirmed → update Common Work Patterns
-- A mistake is made about the user and fixed → add to Learning History with date
+- A wrong assumption about *who the user is* is corrected → add to Learning History with date
+
+**Learning History is NOT for technical mistakes** (wrong git command, bash syntax error, etc.) — those go in `tasks/lessons.md` at the project root. Learning History is only for wrong assumptions about the user's identity, environment, stack, or preferences.
 
 **How to update:**
 1. Read the current `~/.claude/memory/PROFILE.md`
