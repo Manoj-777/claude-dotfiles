@@ -13,10 +13,15 @@
 - One task per subagent for focused execution
 
 ### 3. Self-Improvement Loop
-- After ANY correction from the user: update `tasks/lessons.md` at the project root with the pattern
-- Write rules for yourself that prevent the same mistake
+- After ANY of the following, immediately update `tasks/lessons.md` at the project root:
+  - User corrects Claude on something
+  - A mistake is discovered and fixed mid-session (even if user didn't point it out)
+  - A workaround or non-obvious fix was needed to solve a problem
+  - An assumption turned out to be wrong
+- Write rules that prevent the same mistake from recurring
 - Ruthlessly iterate on these lessons until mistake rate drops
 - Review lessons at session start for the relevant project
+- Run `/learn` at the end of any substantial session to extract additional patterns
 
 ### 4. Verification Before Done
 - Never mark a task complete without proving it works
@@ -47,7 +52,7 @@
 3. **Track Progress**: Mark items complete as you go
 4. **Explain Changes**: High-level summary at each step
 5. **Document Results**: Add review section to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` at the project root after any corrections
+6. **Capture Lessons**: Update `tasks/lessons.md` immediately after any mistake, fix, or correction — not just at the end
 
 ---
 
