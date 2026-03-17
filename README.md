@@ -1,6 +1,6 @@
 # Claude Dotfiles
 
-Production-ready Claude Code configuration — 95 skills, 18 agents, 40+ commands, hooks, rules, and MCP configs built and refined through intensive daily use.
+Production-ready Claude Code configuration — 94 skills, 18 agents, 40+ commands, hooks, rules, and MCP configs built and refined through intensive daily use.
 
 All skills fully comply with Anthropic's official skill guide best practices.
 
@@ -297,7 +297,7 @@ Claude maintains a living profile of you across sessions:
 
 - **Stored at**: `~/.claude/memory/PROFILE.md`
 - **Auto-loaded**: every session start via a `SessionStart` hook in `settings.json`
-- **Updated by**: the `user-profile` skill — triggered when new preferences, corrections, or patterns are observed
+- **Updated by**: Claude automatically — protocol is defined in `CLAUDE.md` section 7, triggered when new preferences, corrections, or patterns are observed
 - **Covers**: identity, tech stack, work methodology, communication preferences, recurring patterns, current setup, learning history
 - **Private**: `memory/` is gitignored from the public repo — only backed up in your private dotfiles
 
