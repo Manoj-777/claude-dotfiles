@@ -25,14 +25,27 @@
 
 ### 7. Living User Profile
 - `~/.claude/memory/PROFILE.md` holds a living profile of the user — identity, preferences, methodology, stack, and learned patterns
-- Read it at session start (loaded automatically via SessionStart hook) — use it to calibrate communication style, avoid wrong assumptions, and apply the right defaults
-- Update it whenever:
-  - The user corrects a wrong assumption about their stack or environment
-  - A new preference, tool choice, or working style is observed
-  - A recurring pattern is confirmed across multiple interactions
-  - The user mentions they've moved to a new project, machine, or workflow
-- Use `/user-profile` skill for the full update protocol and section structure
+- Loaded automatically at session start via SessionStart hook — use it to calibrate tone, avoid wrong assumptions, and apply the right defaults
+
+**When to update PROFILE.md:**
+- User corrects a wrong assumption about their stack or environment → update Technical Stack
+- User expresses a preference for how Claude should behave → update Communication Preferences or Expectations
+- A new tool, language, or workflow is mentioned → update Technical Stack or Environment & Setup
+- A recurring pattern is confirmed → update Common Work Patterns
+- A mistake is made about the user and fixed → add to Learning History with date
+
+**How to update:**
+1. Read the current `~/.claude/memory/PROFILE.md`
+2. Find the correct section — do not add to the wrong section
+3. Append or update the relevant entry — do not duplicate existing entries
+4. Keep entries concise — one clear sentence per insight
+5. Learning History entries must have a date: `- **YYYY-MM-DD**: what was learned`
+6. Never remove existing entries unless factually wrong — correct inline instead
+
+**Rules:**
 - Never add speculative entries — only confirmed, observed facts
+- Never overwrite sections — only append or update specific entries
+- The profile is private — only in `~/.claude/memory/` which is gitignored from the public repo
 
 ### 4. Verification Before Done
 - Never mark a task complete without proving it works
