@@ -1,0 +1,42 @@
+# ── Runtime & Session Data ────────────────────────────────
+projects/
+sessions/
+homunculus/
+cache/
+metrics/
+paste-cache/
+shell-snapshots/
+file-history/
+backups/
+plans/
+session-env/
+downloads/
+ide/
+
+# ── History & Logs ────────────────────────────────────────
+history.jsonl
+*.jsonl
+*.log
+
+# ── Secrets (add your own if needed) ──────────────────────
+# settings.local.json   # uncomment if you store tokens here
+*.env
+.env*
+secrets/
+
+# ── OS & Editor Noise ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# ── Skill Stocktake Cache ─────────────────────────────────
+skills/skill-stocktake/results.json
+
+# ── Memory (personal notes — keep private) ────────────────
+memory/
+
+# ── Plugin Runtime State ──────────────────────────────────
+plugins/*/node_modules/
+ecc/

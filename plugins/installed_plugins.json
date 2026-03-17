@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "plugins": {
+    "everything-claude-code@everything-claude-code": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\RSManoj\\.claude\\plugins\\cache\\everything-claude-code\\everything-claude-code\\1.8.0",
+        "version": "1.8.0",
+        "installedAt": "2026-03-16T11:36:15.507Z",
+        "lastUpdated": "2026-03-16T11:36:15.507Z",
+        "gitCommitSha": "b48930974b7b3821a32eb19e88b04a25e2f090cd"
+      }
+    ]
+  }
+}

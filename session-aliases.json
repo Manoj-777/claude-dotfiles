@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "aliases": {
+    "__proto__": {
+      "sessionPath": "/evil/path",
+      "createdAt": "2026-03-17T09:01:16.430Z",
+      "title": "Prototype Pollution Attempt"
+    },
+    "normal": {
+      "sessionPath": "/normal/path",
+      "createdAt": "2026-03-17T09:01:16.430Z",
+      "title": "Normal Alias"
+    }
+  },
+  "metadata": { "totalCount": 2, "lastUpdated": "2026-03-17T09:01:16.430Z" }
+}
