@@ -17,19 +17,31 @@ All 94 skills fully comply with Anthropic's official skill guide best practices.
 | `hooks/` | Trigger-based automations — Python auto-format, git safety, session project detection |
 | `mcp-configs/` | 25+ MCP server configuration templates |
 | `CLAUDE.md` | Global instructions for Claude — workflow, coding standards, core principles |
-| `SETUP_GUIDE.md` | Full setup guide with MCP config, install steps, and verification |
+| `SETUP_GUIDE.md` | Detailed setup guide with all steps, MCP keys, and verification commands |
 
 ---
 
-## Quick Install
+## Getting Started
 
-**Prerequisites:** Node.js >= 18, Git, Claude Code CLI (`npm install -g @anthropic/claude-code`)
+Follow these steps in order on a new machine.
+
+### Step 1 — Install prerequisites
+
+| Tool | Install |
+|------|---------|
+| Node.js >= 18 | https://nodejs.org |
+| Git | https://git-scm.com |
+| Claude Code CLI | `npm install -g @anthropic/claude-code` |
+
+> **Windows only (for PDF reading):** Download [poppler for Windows](https://github.com/oschwartz10612/poppler-windows/releases), extract it, and add the `bin/` folder to your PATH.
+
+### Step 2 — Clone this repo into ~/.claude
 
 ```bash
-# Option A: Fresh machine
+# Option A: Fresh machine (no existing ~/.claude)
 git clone https://github.com/Manoj-777/claude-dotfiles.git ~/.claude
 
-# Option B: Merge into existing ~/.claude
+# Option B: You already have ~/.claude — merge selectively
 git clone https://github.com/Manoj-777/claude-dotfiles.git /tmp/cdotfiles
 cp -r /tmp/cdotfiles/skills ~/.claude/
 cp -r /tmp/cdotfiles/agents ~/.claude/
@@ -37,16 +49,54 @@ cp -r /tmp/cdotfiles/rules ~/.claude/
 cp -r /tmp/cdotfiles/commands ~/.claude/
 cp -r /tmp/cdotfiles/hooks ~/.claude/
 cp -r /tmp/cdotfiles/mcp-configs ~/.claude/
+cp /tmp/cdotfiles/CLAUDE.md ~/.claude/
+cp /tmp/cdotfiles/settings.json ~/.claude/
 ```
 
----
+### Step 3 — Install ECC (Everything Claude Code)
 
-## MCP Servers Setup
+ECC is the source framework these dotfiles are built on. It provides the installer, test suite, and update tooling.
 
-MCP servers give Claude real tools — GitHub, browser, search, databases.
-Add to `~/.claude.json` (separate from `~/.claude/settings.json`).
+```bash
+git clone https://github.com/affaan-m/everything-claude-code.git
+cd everything-claude-code
+npm install
 
-### Recommended starter set
+# Install with the recommended profiles (developer + security + research)
+node scripts/install-apply.js --profile developer --with capability:security --with capability:research
+```
+
+Available profiles — choose what fits your workflow:
+
+| Profile | What it installs |
+|---------|-----------------|
+| `core` | Skills + rules only (minimal) |
+| `developer` | Core + agents + commands + hooks (recommended) |
+| `security` | Security skills + security-reviewer agent |
+| `research` | Deep research and retrieval skills |
+| `full` | Everything |
+
+Not sure what's included? Preview before installing:
+```bash
+node scripts/install-plan.js --profile developer
+node scripts/install-plan.js --list-components
+```
+
+### Step 4 — Configure MCP Servers
+
+MCP servers give Claude real tools — GitHub, browser automation, web search, databases, and more.
+
+Create or edit `~/.claude.json` (this is separate from `~/.claude/settings.json`):
+
+```bash
+# Windows
+notepad %USERPROFILE%\.claude.json
+
+# Mac / Linux
+nano ~/.claude.json
+```
+
+Paste this starter configuration and replace the placeholder tokens:
 
 ```json
 {
@@ -77,7 +127,44 @@ Add to `~/.claude.json` (separate from `~/.claude/settings.json`).
 }
 ```
 
-### All available MCP servers (from `mcp-configs/mcp-servers.json`)
+Where to get API keys:
+
+| Key | Where to get it |
+|-----|----------------|
+| GitHub PAT | github.com > Settings > Developer Settings > Personal Access Tokens > Fine-grained |
+| Exa | exa.ai > Dashboard > API Keys |
+| Firecrawl | firecrawl.dev > Dashboard |
+| Fal.ai | fal.ai > Dashboard > API Keys |
+
+> Keep under 10 MCPs active at once — each consumes context window.
+
+See `mcp-configs/mcp-servers.json` for the full list of 25+ server configs.
+
+### Step 5 — Verify everything works
+
+```bash
+cd everything-claude-code
+
+# Run full test suite — should show 1194 tests, 0 failures
+node tests/run-all.js
+
+# Check ECC install health
+node scripts/doctor.js
+
+# Validate all 94 skills are compliant
+node scripts/ci/validate-skill-descriptions.js
+
+# See what's installed
+node scripts/list-installed.js
+```
+
+Then open Claude Code and try a slash command like `/plan` or `/tdd` to confirm skills and commands are loading.
+
+---
+
+## All Available MCP Servers
+
+Full reference from `mcp-configs/mcp-servers.json`:
 
 | Server | Purpose | Token needed? |
 |--------|---------|--------------|
@@ -101,43 +188,11 @@ Add to `~/.claude.json` (separate from `~/.claude/settings.json`).
 | `magic` | Magic UI components | No |
 | `filesystem` | Local file operations | No |
 
-> Keep under 10 MCPs active at once to preserve context window.
-
----
-
-## ECC Plugin (Recommended)
-
-These dotfiles are built on [Everything Claude Code (ECC)](https://github.com/affaan-m/everything-claude-code).
-Install ECC for the full installer, test suite, and update workflow:
-
-```bash
-git clone https://github.com/affaan-m/everything-claude-code.git
-cd everything-claude-code
-npm install
-
-# Install with recommended profiles
-node scripts/install-apply.js --profile developer --with capability:security --with capability:research
-
-# Verify — should show 1194 tests, 0 failures
-node tests/run-all.js
-node scripts/doctor.js
-```
-
-**Install profiles:**
-
-| Profile | Includes |
-|---------|---------|
-| `core` | Skills + rules only |
-| `developer` | Core + agents + commands + hooks |
-| `security` | Security skills + security-reviewer agent |
-| `research` | Deep research skills |
-| `full` | Everything |
-
 ---
 
 ## Skills (94 total)
 
-All skills meet Anthropic's official requirements:
+All skills comply with Anthropic's official skill guide:
 - Trigger phrases ("Use when...", "Use for...") in every description
 - YAML frontmatter with `name`, `description`, `license`, `version`, `metadata`
 - Descriptions under 1024 characters
@@ -223,7 +278,7 @@ All skills meet Anthropic's official requirements:
 
 ## Customization
 
-**CLAUDE.md** — Edit to add your engineering context, workflow preferences, and project rules.
+**CLAUDE.md** — Edit to add your engineering context, workflow preferences, and project-specific rules.
 
 **settings.json** — Add permissions to stop Claude prompting for common commands:
 ```json
@@ -240,15 +295,34 @@ All skills meet Anthropic's official requirements:
 ```bash
 cp -r rules/typescript ~/.claude/rules/typescript
 cp -r rules/python ~/.claude/rules/python
+cp -r rules/golang ~/.claude/rules/golang
 ```
 
 ---
 
-## Full Setup Guide
+## Keeping Up to Date
 
-See [SETUP_GUIDE.md](./SETUP_GUIDE.md) for step-by-step instructions including:
-- New machine setup from scratch
-- MCP configuration with all API key sources
-- ECC install profile reference
-- Verification commands
-- Update workflow for keeping both repos in sync
+```bash
+# Pull latest ECC updates
+cd everything-claude-code
+git pull && npm install
+node scripts/install-apply.js --profile developer --with capability:security --with capability:research
+
+# Backup your ~/.claude changes
+cd ~/.claude
+git add . && git commit -m "chore: sync $(date +%Y-%m-%d)"
+git push origin main
+```
+
+---
+
+## Based On
+
+Built on [Everything Claude Code (ECC)](https://github.com/affaan-m/everything-claude-code) with:
+- All 94 skills updated to comply with Anthropic's official skill guide
+- CI validator added to the test pipeline
+- Skill compliance test suite (12 assertions, 1194 total tests passing)
+- Negative triggers on broad skills to prevent over-triggering
+- Complete MCP server reference with 25+ servers
+
+See [SETUP_GUIDE.md](./SETUP_GUIDE.md) for the full detailed guide.
