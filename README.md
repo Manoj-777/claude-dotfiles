@@ -8,16 +8,16 @@ All 94 skills fully comply with Anthropic's official skill guide best practices.
 
 ## What's Inside
 
-| Folder | Contents |
-|--------|----------|
+| Folder / File | Contents |
+|---------------|----------|
 | `skills/` | 94 skills — Python, Go, Kotlin, Swift, Java, Django, Docker, Postgres, security, TDD, AI/LLM, and more |
 | `agents/` | 18 specialized subagents — planner, code-reviewer, tdd-guide, security-reviewer, architect, and more |
 | `rules/` | Always-on coding standards — security, git workflow, testing requirements, coding style |
-| `commands/` | 40+ slash commands — `/tdd`, `/plan`, `/e2e`, `/code-review`, `/build-fix`, and more |
-| `hooks/` | Trigger-based automations — Python auto-format, git safety, session project detection |
-| `mcp-configs/` | 25+ MCP server configuration templates |
-| `CLAUDE.md` | Global instructions for Claude — workflow, coding standards, core principles |
-| `SETUP_GUIDE.md` | Detailed setup guide with all steps, MCP keys, and verification commands |
+| `commands/` | 40+ slash commands — `/tdd`, `/plan`, `/new-project`, `/e2e`, `/code-review`, and more |
+| `hooks/` | 5 trigger-based automations — auto-format, git safety, project detection, dotfiles sync, ECC update check |
+| `mcp-configs/` | 25+ MCP server templates + token reference guide |
+| `CLAUDE.md` | Global instructions for Claude — workflow, lesson capture rules, coding standards |
+| `SETUP_GUIDE.md` | Full setup guide with MCP keys, install steps, and verification commands |
 
 ---
 
@@ -66,7 +66,7 @@ npm install
 node scripts/install-apply.js --profile developer --with capability:security --with capability:research
 ```
 
-Available profiles — choose what fits your workflow:
+Available profiles:
 
 | Profile | What it installs |
 |---------|-----------------|
@@ -76,7 +76,7 @@ Available profiles — choose what fits your workflow:
 | `research` | Deep research and retrieval skills |
 | `full` | Everything |
 
-Not sure what's included? Preview before installing:
+Preview before installing:
 ```bash
 node scripts/install-plan.js --profile developer
 node scripts/install-plan.js --list-components
@@ -85,8 +85,7 @@ node scripts/install-plan.js --list-components
 ### Step 4 — Configure MCP Servers
 
 MCP servers give Claude real tools — GitHub, browser automation, web search, databases, and more.
-
-Create or edit `~/.claude.json` (this is separate from `~/.claude/settings.json`):
+Add them to `~/.claude.json` (separate from `~/.claude/settings.json`):
 
 ```bash
 # Windows
@@ -127,18 +126,10 @@ Paste this starter configuration and replace the placeholder tokens:
 }
 ```
 
-Where to get API keys:
-
-| Key | Where to get it |
-|-----|----------------|
-| GitHub PAT | github.com > Settings > Developer Settings > Personal Access Tokens > Fine-grained |
-| Exa | exa.ai > Dashboard > API Keys |
-| Firecrawl | firecrawl.dev > Dashboard |
-| Fal.ai | fal.ai > Dashboard > API Keys |
-
 > Keep under 10 MCPs active at once — each consumes context window.
 
-See `mcp-configs/mcp-servers.json` for the full list of 25+ server configs.
+See `mcp-configs/mcp-servers.json` for all 25+ server configs.
+See `mcp-configs/mcp-tokens-reference.md` for where to get every API key and a new-machine checklist.
 
 ### Step 5 — Verify everything works
 
@@ -158,13 +149,13 @@ node scripts/ci/validate-skill-descriptions.js
 node scripts/list-installed.js
 ```
 
-Then open Claude Code and try a slash command like `/plan` or `/tdd` to confirm skills and commands are loading.
+Then open Claude Code and try `/plan` or `/tdd` to confirm skills and commands are loading.
 
 ---
 
 ## All Available MCP Servers
 
-Full reference from `mcp-configs/mcp-servers.json`:
+Full reference in `mcp-configs/mcp-servers.json` | Token guide in `mcp-configs/mcp-tokens-reference.md`
 
 | Server | Purpose | Token needed? |
 |--------|---------|--------------|
@@ -197,7 +188,7 @@ All skills comply with Anthropic's official skill guide:
 - YAML frontmatter with `name`, `description`, `license`, `version`, `metadata`
 - Descriptions under 1024 characters
 - Negative triggers on broad skills to prevent over-triggering
-- CI validator + compliance test suite included
+- CI validator + compliance test suite (1194 tests, 0 failures)
 
 | Domain | Skills |
 |--------|--------|
@@ -219,28 +210,35 @@ All skills comply with Anthropic's official skill guide:
 
 ## Agents (18)
 
-| Agent | When to use |
-|-------|-------------|
-| `planner` | Complex features, multi-step tasks |
-| `architect` | System design, technology decisions |
-| `tdd-guide` | New features, bug fixes (write tests first) |
-| `code-reviewer` | After writing code |
-| `security-reviewer` | Before commits, auth/API code |
-| `build-error-resolver` | When build or compile fails |
-| `e2e-runner` | Critical user flows |
-| `refactor-cleaner` | Dead code cleanup |
-| `doc-updater` | Updating documentation |
-| `python-reviewer` | Python-specific review |
-| `go-reviewer` | Go-specific review |
-| `kotlin-reviewer` | Kotlin-specific review |
-| `database-reviewer` | Schema and query review |
-| `chief-of-staff` | Orchestration and coordination |
+Agents use a 3-tier model strategy: **Opus** for complex reasoning, **Sonnet** for standard work, **Haiku** for mechanical tasks.
+
+| Agent | Model | When to use |
+|-------|-------|-------------|
+| `architect` | Opus | System design, technology decisions |
+| `planner` | Opus | Complex features, multi-step tasks |
+| `chief-of-staff` | Opus | Orchestration and coordination |
+| `code-reviewer` | Sonnet | After writing code |
+| `tdd-guide` | Sonnet | New features, bug fixes (write tests first) |
+| `security-reviewer` | Sonnet | Before commits, auth/API code |
+| `e2e-runner` | Sonnet | Critical user flows |
+| `database-reviewer` | Sonnet | Schema and query review |
+| `go-reviewer` | Sonnet | Go-specific review |
+| `kotlin-reviewer` | Sonnet | Kotlin-specific review |
+| `python-reviewer` | Sonnet | Python-specific review |
+| `refactor-cleaner` | Sonnet | Dead code cleanup |
+| `harness-optimizer` | Sonnet | Agent harness tuning |
+| `loop-operator` | Sonnet | Continuous loop management |
+| `doc-updater` | Haiku | Updating documentation |
+| `build-error-resolver` | Haiku | When build or compile fails |
+| `go-build-resolver` | Haiku | Go build error resolution |
+| `kotlin-build-resolver` | Haiku | Kotlin/Gradle build error resolution |
 
 ---
 
 ## Slash Commands
 
 ```
+/new-project      Bootstrap new project (tasks/, CLAUDE.md, lessons.md)
 /tdd              Test-driven development workflow
 /plan             Generate implementation plan
 /e2e              Generate and run E2E tests
@@ -268,11 +266,27 @@ All skills comply with Anthropic's official skill guide:
 
 ## Hooks
 
-| Hook | Fires on | What it does |
-|------|----------|-------------|
-| `post-edit-python-format.sh` | After Edit/Write | Auto-formats Python files |
-| `pre-bash-git-safety.sh` | Before Bash | Warns on destructive git operations |
-| `session-start-project-detect.sh` | Session start | Detects project context |
+5 hooks active across the session lifecycle:
+
+| Hook | Event | What it does |
+|------|-------|-------------|
+| `session-start-project-detect.sh` | SessionStart | Detects project type and loads context |
+| `session-start-ecc-update-check.sh` | SessionStart | Checks for ECC updates once per week, prints reminder if behind |
+| `pre-bash-git-safety.sh` | PreToolUse (Bash) | Warns on destructive git operations |
+| `post-edit-python-format.sh` | PostToolUse (Edit/Write) | Auto-formats Python files |
+| `stop-dotfiles-sync.sh` | Stop | Auto-commits any ~/.claude changes after each response (local only) |
+
+---
+
+## Self-Improvement Loop
+
+Lessons are captured automatically and loaded on every session start:
+
+- **Auto-captured**: corrections, mid-session fixes, self-discovered mistakes, wrong assumptions
+- **Stored at**: `<project-root>/tasks/lessons.md` (project-specific)
+- **Loaded on**: every `SessionStart` via the `session-start-lessons.js` hook
+- **Promoted globally**: use `/promote` to push project lessons to `~/.claude/CLAUDE.md`
+- **End-of-session**: run `/learn` to extract additional patterns from the full session
 
 ---
 
@@ -302,15 +316,17 @@ cp -r rules/golang ~/.claude/rules/golang
 
 ## Keeping Up to Date
 
+ECC updates are checked automatically every week at session start. To update manually:
+
 ```bash
-# Pull latest ECC updates
 cd everything-claude-code
 git pull && npm install
 node scripts/install-apply.js --profile developer --with capability:security --with capability:research
+```
 
-# Backup your ~/.claude changes
+Your `~/.claude` changes are auto-committed locally after each session. To push to your backup repo:
+```bash
 cd ~/.claude
-git add . && git commit -m "chore: sync $(date +%Y-%m-%d)"
 git push origin main
 ```
 
@@ -320,9 +336,12 @@ git push origin main
 
 Built on [Everything Claude Code (ECC)](https://github.com/affaan-m/everything-claude-code) with:
 - All 94 skills updated to comply with Anthropic's official skill guide
-- CI validator added to the test pipeline
-- Skill compliance test suite (12 assertions, 1194 total tests passing)
-- Negative triggers on broad skills to prevent over-triggering
-- Complete MCP server reference with 25+ servers
+- 3-tier model strategy (Haiku / Sonnet / Opus) aligned across all 18 agents
+- Self-improvement loop with automatic lesson capture and session-start loading
+- Auto dotfiles sync hook — commits `~/.claude` changes after every session
+- Weekly ECC update check at session start
+- `/new-project` command to bootstrap any new project
+- MCP token reference guide for new machine setup
+- CI validator + compliance test suite (1194 tests, 0 failures)
 
 See [SETUP_GUIDE.md](./SETUP_GUIDE.md) for the full detailed guide.
