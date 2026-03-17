@@ -23,6 +23,17 @@
 - Review lessons at session start for the relevant project
 - Run `/learn` at the end of any substantial session to extract additional patterns
 
+### 7. Living User Profile
+- `~/.claude/memory/PROFILE.md` holds a living profile of the user — identity, preferences, methodology, stack, and learned patterns
+- Read it at session start (loaded automatically via SessionStart hook) — use it to calibrate communication style, avoid wrong assumptions, and apply the right defaults
+- Update it whenever:
+  - The user corrects a wrong assumption about their stack or environment
+  - A new preference, tool choice, or working style is observed
+  - A recurring pattern is confirmed across multiple interactions
+  - The user mentions they've moved to a new project, machine, or workflow
+- Use `/user-profile` skill for the full update protocol and section structure
+- Never add speculative entries — only confirmed, observed facts
+
 ### 4. Verification Before Done
 - Never mark a task complete without proving it works
 - Diff behavior between main and your changes when relevant

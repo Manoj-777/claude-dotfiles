@@ -50,6 +50,16 @@
             "async": true
           }
         ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const fs=require(\"fs\"),p=require(\"os\").homedir()+\"/.claude/memory/PROFILE.md\"; if(fs.existsSync(p)){const c=fs.readFileSync(p,\"utf8\"); process.stdout.write(JSON.stringify({type:\"text\",text:\"[User Profile loaded]\n\"+c}))}\"",
+            "async": false
+          }
+        ]
       }
     ],
     "Stop": [
