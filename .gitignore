@@ -40,3 +40,7 @@ memory/
 # ── Plugin Runtime State ──────────────────────────────────
 plugins/*/node_modules/
 ecc/
+ecc/
+plugins/
+ecc/
+plugins/
